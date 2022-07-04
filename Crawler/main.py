@@ -2,11 +2,18 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
+from datetime import date
+import psycopg2
 import time
 
 teacher = []
 
 def collect():
+
+    # DB
+    db = psycopg2.connect(host='localhost', dbname='opmdb', user='postgres', password='1234', port=5432)
+    db.autocommit=True
+    cur = db.cursor()
 
     # 크롬 옵션 설정
     options = webdriver.ChromeOptions()
@@ -45,6 +52,13 @@ def collect():
             teacher.append(name)
 
     print(teacher)
+    
+    query = """
+    INSERT INTO teacher(name, year) VALUES(%s, %s);
+    """
+    year = str(date.today().year)
+    for i in range(len(teacher)):
+        cur.execute(query, [teacher[i], year])
 
     while(True):
         pass
