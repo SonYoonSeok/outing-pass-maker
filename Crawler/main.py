@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
 import psycopg2
 import time
+import os
 
 teacher = []
 
@@ -29,8 +30,8 @@ def collect():
 
     # 로그인
     # driver.find_element_by_xpath('//*[@id="wrap"]/div[1]/header/div[2]/ul/li[2]/a').click()
-    driver.find_element_by_name('imemUsrID').send_keys('sys5517')
-    driver.find_element_by_name('imemUsrPass').send_keys('lpko1234!!')
+    driver.find_element_by_name('imemUsrID').send_keys(os.getenv("ID"))
+    driver.find_element_by_name('imemUsrPass').send_keys(os.getenv("PW"))
     driver.find_element_by_class_name('btn_submit').click()
 
     # alert 넘기기
@@ -59,9 +60,6 @@ def collect():
     year = str(date.today().year)
     for i in range(len(teacher)):
         cur.execute(query, [teacher[i], year])
-
-    while(True):
-        pass
 
 if __name__ == "__main__":
     collect()
