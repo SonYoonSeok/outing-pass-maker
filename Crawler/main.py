@@ -12,7 +12,7 @@ teacher = []
 def collect():
 
     # DB
-    db = psycopg2.connect(host='localhost', dbname='opmdb', user='postgres', password='1234', port=5432)
+    db = psycopg2.connect(host='13.124.240.95', dbname='opmdb', user='postgres', password='1234', port=5432)
     db.autocommit=True
     cur = db.cursor()
 
